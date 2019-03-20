@@ -1,0 +1,71 @@
+.card {
+	background: #FFFFFF;
+	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+	margin: 10px;
+  padding: 15px 5px;
+  max-width: 500px;
+}
+
+.card.Red { background-color: #F44336 }
+.card.Pink { background-color: #E91E63 }
+.card.Purple { background-color: #9C27B0 }
+.card.DeepPurple { background-color: #673AB7 }
+.card.Indigo { background-color: #3F51B5 }
+.card.Blue { background-color: #2196F3 }
+.card.LightBlue { background-color: #03A9F4 }
+.card.Cyan { background-color: #00BCD4 }
+.card.Teal { background-color: #009688 }
+.card.Green { background-color: #4CAF50 }
+.card.LightGreen { background-color: #8BC34A }
+.card.Lime { background-color: #CDDC39 }
+.card.Yellow { background-color: #FFEB3B }
+.card.Amber { background-color: #FFC107 }
+.card.Orange { background-color: #FF9800 }
+.card.DeepOrange { background-color: #FF5722 }
+.card.Brown { background-color: #795548 }
+
+.animate {
+	transition: all 0.3s ease-in-out;
+}
+
+/* .card.Red input, .card.Red textarea,
+.card.Pink input, .card.Pink textarea,
+.card.Purple input, .card.Purple textarea,
+.card.DeepPurple input, .card.DeepPurple textarea,
+.card.Indigo input, .card.Indigo textarea,
+.card.Blue input, .card.Blue textarea,
+.card.Teal input, .card.Teal textarea,
+.card.DeepOrange input, .card.DeepOrange textarea,
+.card.Brown input, .card.Brown textarea,
+.card.BlueGray input, .card.BlueGray textarea,
+.card.Black input, .card.Black textarea {
+	color: #FFF;
+} */
+
+.card-title {
+	color: #333333;
+	font-family: 'Impact';
+	font-size: 20px;
+	padding: 6px;
+  width: 100%;
+  outline: none;
+  text-transform: uppercase;
+}
+
+.card-description {
+	color: #333333;	
+	font-size: 16px;
+	padding: 6px;
+  width: 100%;
+  outline: none;
+}
+
+.card-title::-webkit-input-placeholder, .card-description::-webkit-input-placeholder {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.card-footer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 15px;
+}
