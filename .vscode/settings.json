@@ -1,0 +1,18 @@
+{
+  "editor.formatOnSave": true,
+  "editor.formatOnPaste": true,
+  "editor.formatOnType": true,
+  "tslint.autoFixOnSave": true,
+  "typescriptHero.imports.organizeOnSave": true,
+
+  "[html]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false,
+    "editor.formatOnType": false,
+  },
+  "[css]": {
+    "editor.formatOnSave": false,
+    "editor.formatOnPaste": false,
+    "editor.formatOnType": false,
+  }
+}

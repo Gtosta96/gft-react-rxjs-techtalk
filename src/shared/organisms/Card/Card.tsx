@@ -1,39 +1,34 @@
 import './Card.css';
 
 import React from 'react';
+import * as ReactRedux from 'react-redux';
 
-import Input from '../../atoms/Input/Input';
+import { changeColor } from '../../../redux/reducers/rootReducer';
 import Button from '../../atoms/Button/Button';
 import ColorButton from '../../atoms/ColorButton/ColorButton';
+import Input from '../../atoms/Input/Input';
 
-const colorButton = {
-  colors: [
-  'Red', 'Pink', 'Purple', 'DeepPurple', 'Indigo', 'Blue', 'Cyan', 'Teal',
-  'Green', 'LightGreen', 'Lime', 'Yellow', 'Amber', 'Orange', 'DeepOrange', 'Brown'
-  ],
-  selectedColor: 'Red',
-};
+interface IProps {
+  colors: string[];
+  selectedColor: string;
+  changeColor: (color: string) => void;
+}
 
-const Card = () => {
+const Card = (props: IProps) => {
   return (
-    <div className="card animate Red">
-      <Input
-        placeholder="Titulo"
-        className="card-title"
-      />
-      
-      <Input
-        placeholder="Descrição"
-        className="card-description"
-      />
+    <div className={`card animate ${props.selectedColor}`}>
+      <Input placeholder="Titulo" className="card-title" />
+
+      <Input placeholder="Descrição" className="card-description" />
 
       <div className="card-footer">
         <div>
-          {colorButton.colors.map((color) => (
+          {props.colors.map(color => (
             <ColorButton
               key={color}
               color={color}
-              activeColor={colorButton.selectedColor}
+              activeColor={props.selectedColor}
+              onClick={props.changeColor}
             />
           ))}
         </div>
@@ -41,7 +36,17 @@ const Card = () => {
         <Button />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Card;
+const mapStateToProps = (state: any) => ({
+  colors: state.colors,
+  selectedColor: state.selectedColor
+});
+
+const mapDispatchToProps = {
+  changeColor
+};
+
+const connectToRedux = ReactRedux.connect(mapStateToProps, mapDispatchToProps);
+export default connectToRedux(Card);
