@@ -1,0 +1,23 @@
+{
+  "todos": [{
+    "id": 1,
+    "title": "Tomar café",
+    "description": "Tomar café da manhã pra ficar fortinho",
+    "status": "TODO"
+  }, {
+    "id": 2,
+    "title": "Estudar para a heroway",
+    "description": "Estudar para a heroway da manhã pra manjar de HTML e CSS",
+    "status": "DOING"
+  }, {
+    "id": 3,
+    "title": "Estudar para a heroway, de novo",
+    "description": "Estudar para a heroway da manhã pra manjar de Javascript",
+    "status": "DOING"
+  }, {
+    "id": 4,
+    "title": "Comer coxinha escondido",
+    "description": "Comer antes de vencer",
+    "status": "DONE"
+  }]
+}
