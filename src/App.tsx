@@ -5,11 +5,15 @@ import * as ReactRedux from 'react-redux';
 
 import logo from './logo.svg';
 import configureStore from './redux/configureStore';
-import Card from './shared/organisms/Card/Card';
+import Todos from './shared/organisms/Todos/Todos';
 
 const store = configureStore();
 
-class App extends Component {
+interface IProps {}
+
+interface IState {}
+
+class App extends Component<IProps, IState> {
   render() {
     return (
       <ReactRedux.Provider store={store}>
@@ -18,7 +22,7 @@ class App extends Component {
             <img src={logo} className="App-logo" alt="logo" />
           </header>
 
-          <Card />
+          <Todos />
         </div>
       </ReactRedux.Provider>
     );

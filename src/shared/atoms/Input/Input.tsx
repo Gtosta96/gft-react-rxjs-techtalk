@@ -4,6 +4,7 @@ interface IProps {
   className?: string;
   type?: string;
   placeholder?: string;
+  value?: string;
 }
 
 interface IState {
@@ -12,17 +13,15 @@ interface IState {
 
 class Input extends Component<IProps, IState> {
   static defaultProps = {
-    type: 'text',
-    placeholder: 'Digite aqui...'
-  }
+    type: "text",
+    placeholder: "Digite aqui..."
+  };
 
   state = {
-    value: ''
-  }
+    value: this.props.value || ""
+  };
 
-  onChange = (e: any) => (
-    this.setState({ value: e.target.value })
-  )
+  onChange = (e: any) => this.setState({ value: e.target.value });
 
   render() {
     return (
@@ -31,8 +30,9 @@ class Input extends Component<IProps, IState> {
         type={this.props.type}
         placeholder={this.props.placeholder}
         onChange={this.onChange}
+        defaultValue={this.state.value}
       />
-    )
+    );
   }
 }
 
