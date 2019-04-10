@@ -3,7 +3,7 @@ import * as ReduxDevtools from 'redux-devtools-extension';
 import thunk from 'redux-thunk';
 
 import cardsReducer from './reducers/cardsReducer';
-import todosReducer from './reducers/todosReducer';
+import todosReducer from './reducers/todos/todosReducer';
 
 const rootReducer = Redux.combineReducers({
   cards: cardsReducer,

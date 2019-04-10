@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 
-import { IAction } from '../models/redux';
-import { ITodo } from '../models/todo';
+import { IAction } from '../../models/redux';
+import { ITodo } from '../../models/todo';
 
 const HTTP_GET_TODOS_FETCHING = "HTTP_GET_TODOS_FETCHING";
 const HTTP_GET_TODOS_SUCCESS = "HTTP_GET_TODOS_SUCCESS";
