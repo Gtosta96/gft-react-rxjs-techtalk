@@ -5,7 +5,7 @@ import * as ReactRedux from 'react-redux';
 
 import logo from './logo.svg';
 import configureStore from './redux/configureStore';
-import Todos from './shared/organisms/Todos/Todos';
+import Todo from './shared/organisms/Todo/Todo';
 
 const store = configureStore();
 
@@ -22,7 +22,7 @@ class App extends Component<IProps, IState> {
             <img src={logo} className="App-logo" alt="logo" />
           </header>
 
-          <Todos />
+          <Todo />
         </div>
       </ReactRedux.Provider>
     );

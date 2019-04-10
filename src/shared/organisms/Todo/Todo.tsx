@@ -17,7 +17,7 @@ interface IProps {
 
 interface IState {}
 
-class Todos extends Component<IProps, IState> {
+class Todo extends Component<IProps, IState> {
   componentDidMount() {
     this.props.getTodos();
   }
@@ -45,4 +45,4 @@ const mapDispatchToProps = {
 };
 
 const connectToRedux = ReactRedux.connect(mapStateToProps, mapDispatchToProps);
-export default connectToRedux(Todos);
+export default connectToRedux(Todo);
