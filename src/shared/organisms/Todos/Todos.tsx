@@ -1,68 +1,43 @@
 import React, { Component } from 'react';
 import * as ReactRedux from 'react-redux';
 
+import { IAppState } from '../../../redux/configureStore';
+import { ITodo } from '../../../redux/models/todo';
 import { getTodos } from '../../../redux/reducers/todosReducer';
 import Card from '../Card/Card';
 
 interface IProps {
-  todosReducer: {
-    todos: {
-      id: string;
-      title: string;
-      description: string;
-    }[];
+  todos: {
+    todos: ITodo[];
     isFetching: boolean;
     hasErrors: boolean;
   };
   getTodos: () => void;
 }
 
-interface IState {
-  todos: {
-    id: string;
-    title: string;
-    description: string;
-  }[];
-}
+interface IState {}
 
 class Todos extends Component<IProps, IState> {
-  state: IState = {
-    todos: []
-  };
-
   componentDidMount() {
-    // fetch("http://my-json-server.typicode.com/HerowayBrasil/04-react/todos", {
-    //   method: "GET"
-    // })
-    //   .then(response => response.json())
-    //   .then(json => {
-    //     this.setState({ todos: json });
-    //   })
-    //   .catch(error => console.log("error", error));
-
     this.props.getTodos();
   }
 
   render() {
-    if (this.props.todosReducer.isFetching) return "LOADING...";
-    if (this.props.todosReducer.hasErrors) return "SOMETHING WENT WRONG...";
+    if (this.props.todos.isFetching) return "LOADING...";
+    if (this.props.todos.hasErrors) return "SOMETHING WENT WRONG...";
 
     return (
       <div>
-        {this.props.todosReducer.todos.map(todo => (
-          <Card
-            key={todo.id}
-            title={todo.title}
-            description={todo.description}
-          />
+        {this.props.todos.todos.map(todo => (
+          <Card key={todo.id} title={todo.title} description={todo.description} />
         ))}
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: any) => ({
-  todosReducer: state.todos // isFetching, hasErrors, todos
+const mapStateToProps = (state: IAppState) => ({
+  todos: state.todos // isFetching, hasErrors, todos
 });
 
 const mapDispatchToProps = {

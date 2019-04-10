@@ -10,6 +10,8 @@ const rootReducer = Redux.combineReducers({
   todos: todosReducer
 });
 
+export type IAppState = ReturnType<typeof rootReducer>;
+
 export default function configureStore() {
   return Redux.createStore(
     rootReducer,

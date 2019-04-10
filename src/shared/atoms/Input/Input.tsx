@@ -4,21 +4,22 @@ interface IProps {
   className?: string;
   type?: string;
   placeholder?: string;
-  value?: string;
+  defaultValue?: string;
 }
 
 interface IState {
-  value: string;
+  value: string | undefined;
 }
 
 class Input extends Component<IProps, IState> {
   static defaultProps = {
     type: "text",
-    placeholder: "Digite aqui..."
+    placeholder: "Digite aqui...",
+    defaultValue: ""
   };
 
   state = {
-    value: this.props.value || ""
+    value: this.props.defaultValue
   };
 
   onChange = (e: any) => this.setState({ value: e.target.value });

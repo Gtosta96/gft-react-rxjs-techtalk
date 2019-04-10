@@ -1,20 +1,16 @@
+import { Dispatch } from 'redux';
+
+import { IAction } from '../models/redux';
+import { ITodo } from '../models/todo';
+
 const HTTP_GET_TODOS_FETCHING = "HTTP_GET_TODOS_FETCHING";
 const HTTP_GET_TODOS_SUCCESS = "HTTP_GET_TODOS_SUCCESS";
 const HTTP_GET_TODOS_FAIL = "HTTP_GET_TODOS_FAIL";
 
 interface IState {
-  todos: {
-    id: string;
-    title: string;
-    description: string;
-  }[];
+  todos: ITodo[];
   isFetching: boolean;
   hasErrors: boolean;
-}
-
-interface IAction {
-  type: string;
-  payload: any;
 }
 
 const initialState: IState = {
@@ -22,7 +18,7 @@ const initialState: IState = {
   isFetching: false,
   hasErrors: false
 };
-export default function reducer(state = initialState, action: IAction) {
+export default function reducer(state = initialState, action: IAction<any>): IState {
   switch (action.type) {
     case HTTP_GET_TODOS_FETCHING:
       return {
@@ -51,20 +47,21 @@ export default function reducer(state = initialState, action: IAction) {
 }
 
 export const getTodos = () => {
-  return (dispatch: any) => {
+  return (dispatch: Dispatch) => {
     dispatch({ type: HTTP_GET_TODOS_FETCHING, payload: null });
 
-    fetch("http://my-json-server.typicode.com/HerowayBrasil/04-react/todos", {
-      method: "GET"
-    })
+    fetch("http://my-json-server.typicode.com/HerowayBrasil/04-react/todos")
       .then(response => response.json())
-      .then(json => dispatch({ type: HTTP_GET_TODOS_SUCCESS, payload: json }))
+      .then(json => {
+        return dispatch({
+          type: HTTP_GET_TODOS_SUCCESS,
+          payload: json
+        });
+      })
       .catch(error => {
-        console.log("error", error);
-
         return dispatch({
           type: HTTP_GET_TODOS_FAIL,
-          payload: error // retorna um erro (provavelmente não é um array)
+          payload: error
         });
       });
   };

@@ -1,13 +1,10 @@
+import { IAction } from '../models/redux';
+
 const CHANGE_COLOR = "CHANGE_COLOR";
 
 interface IState {
   colors: string[];
   selectedColor: string;
-}
-
-interface IAction {
-  type: string;
-  payload: any;
 }
 
 const initialState: IState = {
@@ -31,7 +28,7 @@ const initialState: IState = {
   ],
   selectedColor: "Red"
 };
-export default function reducer(state = initialState, action: IAction) {
+export default function reducer(state = initialState, action: IAction<any>): IState {
   switch (action.type) {
     case CHANGE_COLOR:
       return {

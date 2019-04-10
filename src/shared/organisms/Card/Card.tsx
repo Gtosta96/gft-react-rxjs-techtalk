@@ -3,14 +3,15 @@ import './Card.css';
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 
+import { IAppState } from '../../../redux/configureStore';
 import { changeColor } from '../../../redux/reducers/cardsReducer';
 import Button from '../../atoms/Button/Button';
 import ColorButton from '../../atoms/ColorButton/ColorButton';
 import Input from '../../atoms/Input/Input';
 
 interface IProps {
-  title?: string;
-  description?: string;
+  title: string;
+  description: string;
 
   colors: string[];
   selectedColor: string;
@@ -20,12 +21,12 @@ interface IProps {
 const Card = (props: IProps) => {
   return (
     <div className={`card animate ${props.selectedColor}`}>
-      <Input placeholder="Titulo" className="card-title" value={props.title} />
+      <Input className="card-title" placeholder="Titulo" defaultValue={props.title} />
 
       <Input
-        placeholder="Descrição"
         className="card-description"
-        value={props.description}
+        placeholder="Descrição"
+        defaultValue={props.description}
       />
 
       <div className="card-footer">
@@ -46,7 +47,7 @@ const Card = (props: IProps) => {
   );
 };
 
-const mapStateToProps = (state: any) => ({
+const mapStateToProps = (state: IAppState) => ({
   colors: state.cards.colors,
   selectedColor: state.cards.selectedColor
 });
