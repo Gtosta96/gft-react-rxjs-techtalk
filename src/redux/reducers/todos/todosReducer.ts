@@ -1,7 +1,9 @@
 import { Dispatch } from 'redux';
 
 import { IAction } from '../../models/redux';
-import { ITodo } from '../../models/todo';
+import { ETodoStatus, ITodo } from '../../models/todo';
+
+const ADD_TODO = "ADD_TODO";
 
 const HTTP_GET_TODOS_FETCHING = "HTTP_GET_TODOS_FETCHING";
 const HTTP_GET_TODOS_SUCCESS = "HTTP_GET_TODOS_SUCCESS";
@@ -20,6 +22,11 @@ const initialState: IState = {
 };
 export default function reducer(state = initialState, action: IAction<any>): IState {
   switch (action.type) {
+    case ADD_TODO:
+      return {
+        ...state,
+        todos: [...state.todos, action.payload]
+      };
     case HTTP_GET_TODOS_FETCHING:
       return {
         todos: state.todos,
@@ -45,6 +52,16 @@ export default function reducer(state = initialState, action: IAction<any>): ISt
       return state;
   }
 }
+
+export const addTodo = () => ({
+  type: ADD_TODO,
+  payload: {
+    id: Math.random().toString(),
+    title: "",
+    description: "",
+    status: ETodoStatus.TODO
+  } as ITodo
+});
 
 export const getTodos = () => {
   return (dispatch: Dispatch) => {

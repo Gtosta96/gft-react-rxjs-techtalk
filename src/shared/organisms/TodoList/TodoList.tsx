@@ -5,7 +5,8 @@ import * as ReactRedux from 'react-redux';
 
 import { IAppState } from '../../../redux/configureStore';
 import { ETodoStatus, ITodo } from '../../../redux/models/todo';
-import { getTodos } from '../../../redux/reducers/todos/todosReducer';
+import { addTodo, getTodos } from '../../../redux/reducers/todos/todosReducer';
+import Fab from '../../atoms/Fab/Fab';
 import Todos from '../Todos/Todos';
 
 interface IProps {
@@ -15,6 +16,7 @@ interface IProps {
     hasErrors: boolean;
   };
   getTodos: () => void;
+  addTodo: () => void;
 }
 
 interface IState {}
@@ -44,6 +46,8 @@ class TodoList extends Component<IProps, IState> {
           title={ETodoStatus.DONE}
           todos={this.props.todos.todos.filter(todo => todo.status === ETodoStatus.DONE)}
         />
+
+        <Fab onClick={this.props.addTodo} />
       </div>
     );
   }
@@ -54,7 +58,8 @@ const mapStateToProps = (state: IAppState) => ({
 });
 
 const mapDispatchToProps = {
-  getTodos
+  getTodos,
+  addTodo
 };
 
 const connectToRedux = ReactRedux.connect(mapStateToProps, mapDispatchToProps);

@@ -7,6 +7,9 @@
   border: 0;
   height: 35px;
   text-transform: uppercase;
+  flex: 1;
+  margin-left: 2px;
+  margin-right: 2px;
 }
 
 .button-component:hover,

@@ -1,4 +1,4 @@
-import { IAction } from '../models/redux';
+import { IAction } from '../../models/redux';
 
 const CHANGE_COLOR = "CHANGE_COLOR";
 

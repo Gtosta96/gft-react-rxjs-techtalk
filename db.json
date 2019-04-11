@@ -3,21 +3,25 @@
     "id": 1,
     "title": "Tomar café",
     "description": "Tomar café da manhã pra ficar fortinho",
-    "status": "TODO"
+    "status": "TODO",
+    "color": "Pink"
   }, {
     "id": 2,
     "title": "Estudar para a heroway",
     "description": "Estudar para a heroway da manhã pra manjar de HTML e CSS",
-    "status": "DOING"
+    "status": "DOING",
+    "color": "Amber"
   }, {
     "id": 3,
     "title": "Estudar para a heroway, de novo",
     "description": "Estudar para a heroway da manhã pra manjar de Javascript",
-    "status": "DOING"
+    "status": "DOING",
+    "color": "Brown"
   }, {
     "id": 4,
     "title": "Comer coxinha escondido",
     "description": "Comer antes de vencer",
-    "status": "DONE"
+    "status": "DONE",
+    "color": "Red"
   }]
 }
