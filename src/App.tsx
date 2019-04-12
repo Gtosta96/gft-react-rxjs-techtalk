@@ -5,7 +5,7 @@ import * as ReactRedux from 'react-redux';
 
 import logo from './logo.svg';
 import configureStore from './redux/configureStore';
-import TodoList from './shared/organisms/TodoList/TodoList';
+import TodoList from './shared/organisms/Board/Board';
 
 const store = configureStore();
 

@@ -4,6 +4,8 @@
 	margin: 10px;
   padding: 15px 5px;
   max-width: 500px;
+
+  transition: all 0.3s ease-in-out;
 }
 
 .card.Red { background-color: #F44336 }
@@ -24,23 +26,29 @@
 .card.DeepOrange { background-color: #FF5722 }
 .card.Brown { background-color: #795548 }
 
-.animate {
-	transition: all 0.3s ease-in-out;
+.card.LightBlue input, .card.LightBlue button,
+.card.Cyan input, .card.Cyan button,
+.card.LightGreen input, .card.LightGreen button,
+.card.Green input, .card.Green button,
+.card.Lime input, .card.Lime button,
+.card.Yellow input, .card.Yellow button,
+.card.Amber input, .card.Amber button,
+.card.Orange  input, .card.Orange button{
+  color: #000;
 }
 
-/* .card.Red input, .card.Red textarea,
-.card.Pink input, .card.Pink textarea,
-.card.Purple input, .card.Purple textarea,
-.card.DeepPurple input, .card.DeepPurple textarea,
-.card.Indigo input, .card.Indigo textarea,
-.card.Blue input, .card.Blue textarea,
-.card.Teal input, .card.Teal textarea,
-.card.DeepOrange input, .card.DeepOrange textarea,
-.card.Brown input, .card.Brown textarea,
-.card.BlueGray input, .card.BlueGray textarea,
-.card.Black input, .card.Black textarea {
+.card.Red input, .card.Red button,
+.card.Pink input, .card.Pink button,
+.card.Purple input, .card.Purple button,
+.card.DeepPurple input, .card.DeepPurple button,
+.card.Indigo input, .card.Indigo button,
+.card.Blue input, .card.Blue button,
+.card.Teal input, .card.Teal button,
+.card.DeepOrange input, .card.DeepOrange button,
+.card.Brown input, .card.Brown button,
+.card.BlueGray input, .card.BlueGray button {
 	color: #FFF;
-} */
+}
 
 .card-title {
 	color: #333333;
@@ -50,14 +58,25 @@
   width: 100%;
   outline: none;
   text-transform: uppercase;
+
+  transition: all 0.3s ease-in-out;
 }
 
 .card-description {
-	color: #333333;	
+	color: #333333;
 	font-size: 16px;
 	padding: 6px;
   width: 100%;
   outline: none;
+
+  transition: all 0.3s ease-in-out;
+}
+
+.button-component.card-button {
+  font-size: 35px;
+  line-height: 35px;
+
+  transition: all 0.3s ease-in-out;
 }
 
 .card-title::-webkit-input-placeholder, .card-description::-webkit-input-placeholder {

@@ -1,29 +1,26 @@
-import { ETodoStatus, ITodo } from '../../models/todo';
+import { IAction } from '../../models/redux';
+import { IState } from './todosReducer';
 
-export interface ISegregatedTodos {
-  todo: ITodo[];
-  doing: ITodo[];
-  done: ITodo[];
-}
-export function segregateByStatus(todos: ITodo[]): ISegregatedTodos {
-  const initialValue: ISegregatedTodos = {
-    todo: [],
-    doing: [],
-    done: []
-  };
-
-  return todos.reduce((prev, todo) => {
-    switch (todo.status) {
-      case ETodoStatus.TODO:
-        prev.todo.push(todo);
-
-      case ETodoStatus.DOING:
-        prev.doing.push(todo);
-
-      case ETodoStatus.DONE:
-        prev.done.push(todo);
+export function changeTodoColorHelper(state: IState, action: IAction<any>) {
+  return state.todos.map(todo => {
+    let newTodo = todo;
+    if (todo === action.payload.todo) {
+      const modifiedCopyFromSelectedTodo = { ...todo, color: action.payload.color };
+      newTodo = modifiedCopyFromSelectedTodo;
     }
 
-    return prev;
-  }, initialValue);
+    return newTodo;
+  });
+}
+
+export function moveTodoHelper(state: IState, action: IAction<any>) {
+  return state.todos.map(todo => {
+    let newTodo = todo;
+    if (todo === action.payload.todo) {
+      const modifiedCopyFromSelectedTodo = { ...todo, status: action.payload.status };
+      newTodo = modifiedCopyFromSelectedTodo;
+    }
+
+    return newTodo;
+  });
 }
