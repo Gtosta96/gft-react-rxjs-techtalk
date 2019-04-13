@@ -4,28 +4,34 @@ import React from 'react';
 import * as ReactRedux from 'react-redux';
 
 import { IAppState } from '../../../redux/configureStore';
-import { ETodoStatus, ITodo } from '../../../redux/models/todo';
-import { changeTodoColor, moveTodo } from '../../../redux/reducers/todos/todosReducer';
+import { ETodoColors, ETodoStatus, ITodo } from '../../../redux/models/todo';
+import { changeTodo, moveTodo } from '../../../redux/reducers/todos';
 import Button from '../../atoms/Button/Button';
 import ColorButton from '../../atoms/ColorButton/ColorButton';
 import Input from '../../atoms/Input/Input';
 
 interface IProps {
   todo: ITodo;
-  colors: string[];
-  changeTodoColor: (todo: ITodo, color: string) => void;
-  moveTodo: (todo: ITodo, status: any) => void;
+  colors: ETodoColors[];
+  changeTodo: (todo: ITodo, changes: Partial<ITodo>) => void;
+  moveTodo: (todo: ITodo, status: ETodoStatus) => void;
 }
 
 const Todo = (props: IProps) => {
   return (
     <div className={`card ${props.todo.color}`}>
-      <Input className="card-title" placeholder="Titulo" defaultValue={props.todo.title} />
+      <Input
+        className="card-title"
+        placeholder="Titulo"
+        defaultValue={props.todo.title}
+        onChange={(e: any) => props.changeTodo(props.todo, { title: e.target.value })}
+      />
 
       <Input
         className="card-description"
         placeholder="Descrição"
         defaultValue={props.todo.description}
+        onChange={(e: any) => props.changeTodo(props.todo, { description: e.target.value })}
       />
 
       <div className="card-footer">
@@ -35,7 +41,7 @@ const Todo = (props: IProps) => {
               key={color}
               color={color}
               activeColor={props.todo.color}
-              onClick={() => props.changeTodoColor(props.todo, color)}
+              onClick={() => props.changeTodo(props.todo, { color })}
             />
           ))}
         </div>
@@ -79,7 +85,7 @@ const mapStateToProps = (state: IAppState) => ({
 });
 
 const mapDispatchToProps = {
-  changeTodoColor,
+  changeTodo,
   moveTodo
 };
 

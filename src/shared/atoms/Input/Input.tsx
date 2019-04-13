@@ -5,6 +5,7 @@ interface IProps {
   type?: string;
   placeholder?: string;
   defaultValue?: string;
+  onChange: (e: any) => void;
 }
 
 interface IState {
@@ -22,7 +23,13 @@ class Input extends Component<IProps, IState> {
     value: this.props.defaultValue
   };
 
-  onChange = (e: any) => this.setState({ value: e.target.value });
+  onChange = (e: any) => {
+    this.setState({ value: e.target.value });
+
+    if (this.props.onChange) {
+      this.props.onChange(e);
+    }
+  };
 
   render() {
     return (

@@ -1,11 +1,10 @@
-import { IAction } from '../../models/redux';
-import { IState } from './todosReducer';
+import { IChangeTodo, IMoveTodo, IState } from './types';
 
-export function changeTodoColorHelper(state: IState, action: IAction<any>) {
+export function changeTodoHelper(state: IState, action: IChangeTodo) {
   return state.todos.map(todo => {
     let newTodo = todo;
     if (todo === action.payload.todo) {
-      const modifiedCopyFromSelectedTodo = { ...todo, color: action.payload.color };
+      const modifiedCopyFromSelectedTodo = { ...todo, ...action.payload.changes };
       newTodo = modifiedCopyFromSelectedTodo;
     }
 
@@ -13,7 +12,7 @@ export function changeTodoColorHelper(state: IState, action: IAction<any>) {
   });
 }
 
-export function moveTodoHelper(state: IState, action: IAction<any>) {
+export function moveTodoHelper(state: IState, action: IMoveTodo) {
   return state.todos.map(todo => {
     let newTodo = todo;
     if (todo === action.payload.todo) {
