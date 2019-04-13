@@ -3,7 +3,7 @@ import './App.css';
 import React, { Component } from 'react';
 import * as ReactRedux from 'react-redux';
 
-import TodoList from './components/organisms/Board/Board';
+import Board from './components/pages/Board/Board';
 import logo from './logo.svg';
 import configureStore from './redux/configureStore';
 
@@ -22,7 +22,7 @@ class App extends Component<IProps, IState> {
             <img src={logo} className="App-logo" alt="logo" />
           </header>
 
-          <TodoList />
+          <Board />
         </div>
       </ReactRedux.Provider>
     );
