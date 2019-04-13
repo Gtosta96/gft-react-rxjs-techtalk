@@ -1,4 +1,8 @@
-import { Dispatch } from 'redux';
+import { Action } from 'redux';
+import * as reduxObservable from 'redux-observable';
+import * as rxjs from 'rxjs';
+import { ajax as rxjsAjax } from 'rxjs/ajax';
+import * as rxjsOperators from 'rxjs/operators';
 
 import { IAction } from '../../models/redux';
 import { ETodoColors, ETodoStatus, ITodo } from '../../models/todo';
@@ -57,7 +61,7 @@ export default function reducer(state = INITIAL_STATE, action: IAction<any>): IS
         colors: state.colors
       };
 
-    case EActions.HTTP_GET_TODOS_FETCHING:
+    case EActions.HTTP_GET_TODOS:
       return {
         isFetching: true,
         hasErrors: state.hasErrors,
@@ -107,29 +111,22 @@ export const moveTodo = (todo: ITodo, status: ETodoStatus): IMoveTodo => ({
   payload: { todo, status }
 });
 
-// export const getTodos = () => {
-//   return (dispatch: Dispatch) => {
-//     dispatch({ type: EActions.HTTP_GET_TODOS_FETCHING, payload: null });
+export const getTodos = () => ({
+  type: EActions.HTTP_GET_TODOS
+});
 
-//     fetch("http://my-json-server.typicode.com/HerowayBrasil/04-react/todos")
-//       .then(response => response.json())
-//       .then(json => dispatch({ type: EActions.HTTP_GET_TODOS_SUCCESS, payload: json }))
-//       .catch(error => dispatch({ type: EActions.HTTP_GET_TODOS_FAIL, payload: error }))
-//   };
-// };
-
-export const getTodos = () => {
-  return async (dispatch: Dispatch) => {
-    dispatch({ type: EActions.HTTP_GET_TODOS_FETCHING, payload: null });
-    try {
-      const response = await fetch(
-        "http://my-json-server.typicode.com/HerowayBrasil/04-react/todos"
-      );
-      const json = await response.json();
-
-      dispatch({ type: EActions.HTTP_GET_TODOS_SUCCESS, payload: json });
-    } catch (error) {
-      dispatch({ type: EActions.HTTP_GET_TODOS_FAIL, payload: error });
-    }
-  };
-};
+export const getTodosEpic = (action$: rxjs.Observable<Action>): rxjs.Observable<Action> =>
+  action$.pipe(
+    reduxObservable.ofType(EActions.HTTP_GET_TODOS),
+    rxjsOperators.mergeMap(() =>
+      rxjsAjax.get(`http://my-json-server.typicode.com/HerowayBrasil/04-react/todos`).pipe(
+        rxjsOperators.map(hxr => ({
+          type: EActions.HTTP_GET_TODOS_SUCCESS,
+          payload: hxr.response
+        })),
+        rxjsOperators.catchError(error =>
+          rxjs.of({ type: EActions.HTTP_GET_TODOS_FAIL, payload: error })
+        )
+      )
+    )
+  );

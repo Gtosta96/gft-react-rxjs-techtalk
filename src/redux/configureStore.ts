@@ -1,18 +1,31 @@
 import * as Redux from 'redux';
 import * as ReduxDevtools from 'redux-devtools-extension';
-import thunk from 'redux-thunk';
+import { combineEpics, createEpicMiddleware } from 'redux-observable';
 
-import todosReducer from './reducers/todos';
+import todosReducer, { getTodosEpic } from './reducers/todos';
 
+/**
+ * Reducers
+ */
 const rootReducer = Redux.combineReducers({
   todos: todosReducer
 });
 
 export type IAppState = ReturnType<typeof rootReducer>;
 
+/**
+ * Epics
+ */
+export const rootEpic = combineEpics(getTodosEpic);
+
 export default function configureStore() {
-  return Redux.createStore(
+  const epicMiddleware = createEpicMiddleware();
+
+  const store = Redux.createStore(
     rootReducer,
-    ReduxDevtools.composeWithDevTools(Redux.applyMiddleware(thunk))
+    ReduxDevtools.composeWithDevTools(Redux.applyMiddleware(epicMiddleware))
   );
+
+  epicMiddleware.run(rootEpic);
+  return store;
 }

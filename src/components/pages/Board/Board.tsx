@@ -6,8 +6,8 @@ import * as ReactRedux from 'react-redux';
 import { IAppState } from '../../../redux/configureStore';
 import { ETodoStatus, ITodo } from '../../../redux/models/todo';
 import { addTodo, getTodos } from '../../../redux/reducers/todos';
-import Fab from '../../atoms/Fab/Fab';
-import TodoList from '../TodoList/TodoList';
+import Fab from '../../shared/Fab/Fab';
+import TodoList from './TodoList/TodoList';
 
 interface IProps {
   todos: {

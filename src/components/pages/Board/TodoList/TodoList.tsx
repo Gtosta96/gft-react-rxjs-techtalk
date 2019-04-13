@@ -2,8 +2,8 @@ import './TodoList.css';
 
 import React, { Component } from 'react';
 
-import { ITodo } from '../../../redux/models/todo';
-import Todo from '../Todo/Todo';
+import { ITodo } from '../../../../redux/models/todo';
+import Todo from './Todo/Todo';
 
 interface IProps {
   title: string;

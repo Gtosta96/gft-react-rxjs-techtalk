@@ -3,12 +3,12 @@ import './Todo.css';
 import React from 'react';
 import * as ReactRedux from 'react-redux';
 
-import { IAppState } from '../../../redux/configureStore';
-import { ETodoColors, ETodoStatus, ITodo } from '../../../redux/models/todo';
-import { changeTodo, moveTodo } from '../../../redux/reducers/todos';
-import Button from '../../atoms/Button/Button';
-import ColorButton from '../../atoms/ColorButton/ColorButton';
-import Input from '../../atoms/Input/Input';
+import { IAppState } from '../../../../../redux/configureStore';
+import { ETodoColors, ETodoStatus, ITodo } from '../../../../../redux/models/todo';
+import { changeTodo, moveTodo } from '../../../../../redux/reducers/todos';
+import Button from '../../../../shared/Button/Button';
+import ColorButton from '../../../../shared/ColorButton/ColorButton';
+import Input from '../../../../shared/Input/Input';
 
 interface IProps {
   todo: ITodo;
