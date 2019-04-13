@@ -3,9 +3,9 @@ import './App.css';
 import React, { Component } from 'react';
 import * as ReactRedux from 'react-redux';
 
+import TodoList from './components/organisms/Board/Board';
 import logo from './logo.svg';
 import configureStore from './redux/configureStore';
-import TodoList from './shared/organisms/Board/Board';
 
 const store = configureStore();
 
