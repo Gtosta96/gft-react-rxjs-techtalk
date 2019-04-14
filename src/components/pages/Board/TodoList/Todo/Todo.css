@@ -1,8 +1,9 @@
 .card {
+  position: relative;
 	background: #FFFFFF;
 	box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
 	margin: 10px;
-  padding: 15px 5px;
+  padding: 20px 10px;
   max-width: 500px;
 
   transition: all 0.3s ease-in-out;
@@ -77,6 +78,17 @@
   line-height: 35px;
 
   transition: all 0.3s ease-in-out;
+}
+
+.button-component.card-delete {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  margin: 0;
+  padding: 0;
+  width: 20px;
+  height: 20px;
+  background: transparent;
 }
 
 .card-title::-webkit-input-placeholder, .card-description::-webkit-input-placeholder {

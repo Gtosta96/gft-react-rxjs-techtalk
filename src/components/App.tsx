@@ -21,7 +21,7 @@ class App extends Component<IProps, IState> {
           <header className="App-header">
             <img src={logo} className="App-logo" alt="logo" />
           </header>
-
+          &#xe020;
           <Board />
         </div>
       </ReactRedux.Provider>
