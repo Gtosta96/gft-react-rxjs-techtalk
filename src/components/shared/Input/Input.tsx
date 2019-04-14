@@ -5,7 +5,7 @@ interface IProps {
   type?: string;
   placeholder?: string;
   defaultValue?: string;
-  onChange: (e: any) => void;
+  onChange?: (e: any) => void;
 }
 
 interface IState {

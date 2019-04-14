@@ -1,0 +1,27 @@
+.github {
+  display: flex;
+  flex-direction: column;
+}
+
+.github-search {
+  width: 50vw;
+  display: block;
+  margin: 0 auto;
+}
+
+.github-search > input {
+  margin: 0 auto;
+  width: 100%;
+  height: 45px;
+  padding: 0 20px;
+  font-size: 1rem;
+  border: 1px solid #D0CFCE;
+  outline: none;
+
+  transition: all 0.35s ease;
+ }
+
+ .github-search > input:focus {
+  border: 1px solid #008ABF;
+  color: #008ABF;
+ }

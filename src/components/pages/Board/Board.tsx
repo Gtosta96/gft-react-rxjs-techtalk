@@ -1,10 +1,13 @@
 import './Board.css';
 
 import React, { Component } from 'react';
+import { Subscription } from 'rxjs';
 
 import { ETodoStatus, ITodo } from '../../../models/todo';
 import todosService from '../../../services/todos';
+import Err from '../../shared/Error/Error';
 import Fab from '../../shared/Fab/Fab';
+import Loading from '../../shared/Loading/Loading';
 import TodoList from './TodoList/TodoList';
 
 interface IProps {}
@@ -16,6 +19,8 @@ interface IState {
 }
 
 class Board extends Component<IProps, IState> {
+  todosServiceSubscription$!: Subscription;
+
   state: IState = {
     todos: [],
     isFetching: false,
@@ -25,9 +30,9 @@ class Board extends Component<IProps, IState> {
   componentDidMount() {
     this.setState({ isFetching: true });
 
-    todosService.getTodos().subscribe(
+    this.todosServiceSubscription$ = todosService.getTodos().subscribe(
       todos => {
-        this.setState({ isFetching: false, todos });
+        this.setState({ isFetching: false, hasErrors: false, todos });
       },
       error => {
         this.setState({ isFetching: false, hasErrors: true });
@@ -35,9 +40,13 @@ class Board extends Component<IProps, IState> {
     );
   }
 
+  componentWillUnmount() {
+    this.todosServiceSubscription$.unsubscribe();
+  }
+
   render() {
-    if (this.state.isFetching) return "LOADING...";
-    if (this.state.hasErrors) return "SOMETHING WENT WRONG...";
+    if (this.state.isFetching) return <Loading />;
+    if (this.state.hasErrors) return <Err />;
 
     return (
       <div className="board">
