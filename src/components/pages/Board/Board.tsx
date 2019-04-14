@@ -1,66 +1,65 @@
 import './Board.css';
 
 import React, { Component } from 'react';
-import * as ReactRedux from 'react-redux';
 
-import { IAppState } from '../../../redux/configureStore';
-import { ETodoStatus, ITodo } from '../../../redux/models/todo';
-import { addTodo, getTodos } from '../../../redux/reducers/todos';
+import { ETodoStatus, ITodo } from '../../../models/todo';
+import todosService from '../../../services/todos';
 import Fab from '../../shared/Fab/Fab';
 import TodoList from './TodoList/TodoList';
 
-interface IProps {
-  todos: {
-    todos: ITodo[];
-    isFetching: boolean;
-    hasErrors: boolean;
-  };
-  getTodos: () => void;
-  addTodo: () => void;
+interface IProps {}
+
+interface IState {
+  todos: ITodo[];
+  isFetching: boolean;
+  hasErrors: boolean;
 }
 
-interface IState {}
-
 class Board extends Component<IProps, IState> {
+  state: IState = {
+    todos: [],
+    isFetching: false,
+    hasErrors: false
+  };
+
   componentDidMount() {
-    this.props.getTodos();
+    this.setState({ isFetching: true });
+
+    todosService.getTodos().subscribe(
+      todos => {
+        this.setState({ isFetching: false, todos });
+      },
+      error => {
+        this.setState({ isFetching: false, hasErrors: true });
+      }
+    );
   }
 
   render() {
-    if (this.props.todos.isFetching) return "LOADING...";
-    if (this.props.todos.hasErrors) return "SOMETHING WENT WRONG...";
+    if (this.state.isFetching) return "LOADING...";
+    if (this.state.hasErrors) return "SOMETHING WENT WRONG...";
 
     return (
       <div className="board">
         <TodoList
           title={ETodoStatus.TODO}
-          todos={this.props.todos.todos.filter(todo => todo.status === ETodoStatus.TODO)}
+          todos={this.state.todos.filter(todo => todo.status === ETodoStatus.TODO)}
         />
 
         <TodoList
           title={ETodoStatus.DOING}
-          todos={this.props.todos.todos.filter(todo => todo.status === ETodoStatus.DOING)}
+          todos={this.state.todos.filter(todo => todo.status === ETodoStatus.DOING)}
         />
 
         <TodoList
           title={ETodoStatus.DONE}
-          todos={this.props.todos.todos.filter(todo => todo.status === ETodoStatus.DONE)}
+          todos={this.state.todos.filter(todo => todo.status === ETodoStatus.DONE)}
         />
 
-        <Fab onClick={this.props.addTodo} />
+        <Fab onClick={todosService.addTodo} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
-  todos: state.todos // isFetching, hasErrors, todos
-});
-
-const mapDispatchToProps = {
-  getTodos,
-  addTodo
-};
-
-const connectToRedux = ReactRedux.connect(mapStateToProps, mapDispatchToProps);
-export default connectToRedux(Board);
+export default Board;

@@ -2,7 +2,7 @@ import './TodoList.css';
 
 import React, { Component } from 'react';
 
-import { ITodo } from '../../../../redux/models/todo';
+import { ITodo } from '../../../../models/todo';
 import Todo from './Todo/Todo';
 
 interface IProps {
