@@ -1,33 +1,25 @@
 import * as rxjs from 'rxjs';
 import * as rxjsOperators from 'rxjs/operators';
 
-import { ITodo } from '../../models/todo';
+import { IGithubUser } from '../../models/github';
 import apiService from '../api';
 
 class GithubService {
-  private users$ = new rxjs.BehaviorSubject<any>([]);
+  private query$ = new rxjs.Subject<string>();
 
-  private fetchUsers = (query: string): void => {
-    apiService
-      // .get(`https://jsonplaceholder.typicode.com/users?q=${query}`)
-      .get(`https://api.github.com/search/users?q=${query}`)
-      .pipe(rxjsOperators.map(xhr => xhr.response.items))
-      .subscribe(
-        users => {
-          this.users$.next(users);
-        },
-        error => {
-          this.users$.error(error);
-        }
-      );
-  };
-
-  public getUsers = (): rxjs.Observable<ITodo[]> => {
-    return this.users$.asObservable();
+  public getUsers = (): rxjs.Observable<IGithubUser[]> => {
+    return this.query$.pipe(
+      rxjsOperators.debounceTime(1000),
+      rxjsOperators.switchMap(query =>
+        apiService
+          .get(`https://api.github.com/search/users?q=${query}`)
+          .pipe(rxjsOperators.map(xhr => xhr.response.items))
+      )
+    );
   };
 
   public searchUsers = (query: string) => {
-    this.fetchUsers(query);
+    this.query$.next(query);
   };
 }
 

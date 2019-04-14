@@ -21,10 +21,10 @@ class App extends Component<IProps, IState> {
             <nav className="App-menu">
               <ul>
                 <li>
-                  <Link to={EPaths.BOARD}>Todo List</Link>
+                  <Link to={EPaths.GITHUB}>GitHub Users</Link>
                 </li>
                 <li>
-                  <Link to={EPaths.GITHUB}>GitHub Users</Link>
+                  <Link to={EPaths.BOARD}>Todo List</Link>
                 </li>
               </ul>
             </nav>
@@ -32,10 +32,10 @@ class App extends Component<IProps, IState> {
           </header>
 
           <Switch>
-            <Route exact path={EPaths.ROOT} component={Board} />
+            <Route exact path={EPaths.ROOT} component={Github} />
 
-            <Route path={EPaths.BOARD} component={Board} />
             <Route path={EPaths.GITHUB} component={Github} />
+            <Route path={EPaths.BOARD} component={Board} />
           </Switch>
         </div>
       </Router>

@@ -7,6 +7,7 @@ import { changeTodoHelper, moveTodoHelper } from './helpers';
 
 class TodosService {
   private todos$ = new rxjs.BehaviorSubject<ITodo[]>([]);
+
   public colors: ETodoColors[] = [
     ETodoColors.RED,
     ETodoColors.PINK,
@@ -25,6 +26,19 @@ class TodosService {
     ETodoColors.DEEPORANGE,
     ETodoColors.BROWN
   ];
+
+  private fetchTodos = (): rxjs.Observable<ITodo[]> => {
+    return apiService.get("http://my-json-server.typicode.com/HerowayBrasil/04-react/todos").pipe(
+      rxjsOperators.map(xhr => xhr.response),
+      rxjsOperators.tap(todos => this.todos$.next(todos))
+    );
+  };
+
+  public getTodos = (): rxjs.Observable<ITodo[]> => {
+    this.fetchTodos().subscribe();
+
+    return this.todos$.asObservable();
+  };
 
   public addTodo = () => {
     const newTodo: ITodo = {
@@ -46,26 +60,6 @@ class TodosService {
   public moveTodo = (todo: ITodo, status: ETodoStatus): void => {
     const updatedTodos = moveTodoHelper(this.todos$.value, todo.id, status);
     this.todos$.next(updatedTodos);
-  };
-
-  private fetchTodos = (): void => {
-    apiService
-      .get("http://my-json-server.typicode.com/HerowayBrasil/04-react/todos")
-      .pipe(rxjsOperators.map(xhr => xhr.response))
-      .subscribe(
-        todos => {
-          this.todos$.next(todos);
-        },
-        error => {
-          this.todos$.error(error);
-        }
-      );
-  };
-
-  public getTodos = (): rxjs.Observable<ITodo[]> => {
-    this.fetchTodos();
-
-    return this.todos$.asObservable();
   };
 }
 
