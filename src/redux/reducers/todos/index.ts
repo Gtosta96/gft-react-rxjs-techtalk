@@ -9,6 +9,7 @@ const INITIAL_STATE: IState = {
   isFetching: false,
   hasErrors: false,
   todos: [],
+
   colors: [
     ETodoColors.RED,
     ETodoColors.PINK,
@@ -57,7 +58,7 @@ export default function reducer(state = INITIAL_STATE, action: IAction<any>): IS
         colors: state.colors
       };
 
-    case EActions.HTTP_GET_TODOS_FETCHING:
+    case EActions.HTTP_GET_TODOS:
       return {
         isFetching: true,
         hasErrors: state.hasErrors,
@@ -107,24 +108,13 @@ export const moveTodo = (todo: ITodo, status: ETodoStatus): IMoveTodo => ({
   payload: { todo, status }
 });
 
-// export const getTodos = () => {
-//   return (dispatch: Dispatch) => {
-//     dispatch({ type: EActions.HTTP_GET_TODOS_FETCHING, payload: null });
-
-//     fetch("http://my-json-server.typicode.com/HerowayBrasil/04-react/todos")
-//       .then(response => response.json())
-//       .then(json => dispatch({ type: EActions.HTTP_GET_TODOS_SUCCESS, payload: json }))
-//       .catch(error => dispatch({ type: EActions.HTTP_GET_TODOS_FAIL, payload: error }))
-//   };
-// };
-
 export const getTodos = () => {
   return async (dispatch: Dispatch) => {
-    dispatch({ type: EActions.HTTP_GET_TODOS_FETCHING, payload: null });
+    const url = "http://my-json-server.typicode.com/Gtosta96/gft-react-rxjs-techtalk/todos";
+    dispatch({ type: EActions.HTTP_GET_TODOS, payload: null });
+
     try {
-      const response = await fetch(
-        "http://my-json-server.typicode.com/HerowayBrasil/04-react/todos"
-      );
+      const response = await fetch(url);
       const json = await response.json();
 
       dispatch({ type: EActions.HTTP_GET_TODOS_SUCCESS, payload: json });

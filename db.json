@@ -7,20 +7,20 @@
     "color": "Pink"
   }, {
     "id": 2,
-    "title": "Estudar para a heroway",
-    "description": "Estudar para a heroway da manhã pra manjar de HTML e CSS",
+    "title": "Estudar para ser zica nos HTML & CSS",
+    "description": "HTML é de boa mas e CSS... PQP!",
     "status": "DOING",
     "color": "Amber"
   }, {
     "id": 3,
-    "title": "Estudar para a heroway, de novo",
-    "description": "Estudar para a heroway da manhã pra manjar de Javascript",
+    "title": "Reunião Semanal de FE",
+    "description": "Montar Conteúdo sobre FE para ajudar o Tosta",
     "status": "DOING",
     "color": "Brown"
   }, {
     "id": 4,
     "title": "Comer coxinha escondido",
-    "description": "Comer antes de vencer",
+    "description": "Comer coxinha moscando na mesa dos amiguinho",
     "status": "DONE",
     "color": "Red"
   }]
