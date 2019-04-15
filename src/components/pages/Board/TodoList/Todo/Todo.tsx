@@ -15,6 +15,10 @@ interface IProps {
 const Todo = (props: IProps) => {
   return (
     <div className={`card ${props.todo.color}`}>
+      <Button className="card-delete" onClick={() => alert("TODO -> HANDS ON")}>
+        &#10005;
+      </Button>
+
       <Input
         className="card-title"
         placeholder="Titulo"
