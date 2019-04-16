@@ -19,7 +19,7 @@ interface IState {
 }
 
 class Board extends Component<IProps, IState> {
-  todosServiceSubscription$!: Subscription;
+  todosServiceSubscription!: Subscription;
 
   state: IState = {
     todos: [],
@@ -30,7 +30,7 @@ class Board extends Component<IProps, IState> {
   componentDidMount() {
     this.setState({ isFetching: true });
 
-    this.todosServiceSubscription$ = todosService.getTodos().subscribe(
+    this.todosServiceSubscription = todosService.getTodos(false).subscribe(
       todos => {
         this.setState({ isFetching: false, hasErrors: false, todos });
       },
@@ -41,7 +41,8 @@ class Board extends Component<IProps, IState> {
   }
 
   componentWillUnmount() {
-    this.todosServiceSubscription$.unsubscribe();
+    this.todosServiceSubscription.unsubscribe();
+    todosService.cancelGetTodos();
   }
 
   render() {

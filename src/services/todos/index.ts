@@ -8,6 +8,8 @@ import { changeTodoHelper, moveTodoHelper } from './helpers';
 class TodosService {
   private todos$ = new rxjs.BehaviorSubject<ITodo[]>([]);
 
+  private requestSubscription!: rxjs.Subscription;
+
   public colors: ETodoColors[] = [
     ETodoColors.RED,
     ETodoColors.PINK,
@@ -27,17 +29,26 @@ class TodosService {
     ETodoColors.BROWN
   ];
 
-  private fetchTodos = (): rxjs.Observable<ITodo[]> => {
-    return apiService.get("http://my-json-server.typicode.com/HerowayBrasil/04-react/todos").pipe(
-      rxjsOperators.map(xhr => xhr.response),
-      rxjsOperators.tap(todos => this.todos$.next(todos))
-    );
+  private loadTodos = (): void => {
+    this.requestSubscription = apiService
+      .get("http://my-json-server.typicode.com/HerowayBrasil/04-react/todos")
+      .pipe(
+        rxjsOperators.map(xhr => xhr.response),
+        rxjsOperators.tap(todos => this.todos$.next(todos))
+      )
+      .subscribe();
   };
 
-  public getTodos = (): rxjs.Observable<ITodo[]> => {
-    this.fetchTodos().subscribe();
+  public getTodos = (cache: boolean = false): rxjs.Observable<ITodo[]> => {
+    if (this.todos$.value.length === 0 || cache === false) {
+      this.loadTodos();
+    }
 
     return this.todos$.asObservable();
+  };
+
+  public cancelGetTodos = () => {
+    this.requestSubscription.unsubscribe();
   };
 
   public addTodo = () => {
