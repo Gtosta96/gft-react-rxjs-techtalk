@@ -7,7 +7,7 @@ import * as rxjsOperators from 'rxjs/operators';
 import { IAction } from '../../models/redux';
 import { ETodoColors, ETodoStatus, ITodo } from '../../models/todo';
 import { changeTodoHelper, moveTodoHelper } from './helpers';
-import { EActions, IAddTodo, IChangeTodo, IMoveTodo, IState } from './types';
+import { EActions, IAddTodo, ICancelGetTodo, IChangeTodo, IGetTodo, IMoveTodo, IState } from './types';
 
 const INITIAL_STATE: IState = {
   isFetching: false,
@@ -111,15 +111,20 @@ export const moveTodo = (todo: ITodo, status: ETodoStatus): IMoveTodo => ({
   payload: { todo, status }
 });
 
-export const getTodos = () => ({
+export const getTodos = (): IGetTodo => ({
   type: EActions.HTTP_GET_TODOS
+});
+
+export const cancelGetTodos = (): ICancelGetTodo => ({
+  type: EActions.CANCEL_GET_TODOS
 });
 
 export const getTodosEpic = (action$: rxjs.Observable<Action>): rxjs.Observable<Action> =>
   action$.pipe(
     reduxObservable.ofType(EActions.HTTP_GET_TODOS),
-    rxjsOperators.mergeMap(() =>
+    rxjsOperators.switchMap(() =>
       rxjsAjax.get(`http://my-json-server.typicode.com/HerowayBrasil/04-react/todos`).pipe(
+        rxjsOperators.takeUntil(action$.pipe(reduxObservable.ofType(EActions.CANCEL_GET_TODOS))),
         rxjsOperators.map(hxr => ({
           type: EActions.HTTP_GET_TODOS_SUCCESS,
           payload: hxr.response

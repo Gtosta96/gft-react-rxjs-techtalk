@@ -12,7 +12,9 @@ export enum EActions {
 
   HTTP_GET_TODOS = "@todos/HTTP_GET_TODOS",
   HTTP_GET_TODOS_SUCCESS = "@todos/HTTP_GET_TODOS_SUCCESS",
-  HTTP_GET_TODOS_FAIL = "@todos/HTTP_GET_TODOS_FAIL"
+  HTTP_GET_TODOS_FAIL = "@todos/HTTP_GET_TODOS_FAIL",
+
+  CANCEL_GET_TODOS = "@todos/CANCEL_GET_TODOS"
 }
 
 /**
@@ -45,3 +47,7 @@ export interface IMoveTodo extends Action<EActions.MOVE_TODO> {
     status: ETodoStatus;
   };
 }
+
+export interface IGetTodo extends Action<EActions.HTTP_GET_TODOS> {}
+
+export interface ICancelGetTodo extends Action<EActions.CANCEL_GET_TODOS> {}

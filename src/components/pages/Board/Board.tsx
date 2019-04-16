@@ -5,8 +5,10 @@ import * as ReactRedux from 'react-redux';
 
 import { IAppState } from '../../../redux/configureStore';
 import { ETodoStatus, ITodo } from '../../../redux/models/todo';
-import { addTodo, getTodos } from '../../../redux/reducers/todos';
+import { addTodo, cancelGetTodos, getTodos } from '../../../redux/reducers/todos';
+import Error from '../../shared/Error/Error';
 import Fab from '../../shared/Fab/Fab';
+import Loading from '../../shared/Loading/Loading';
 import TodoList from './TodoList/TodoList';
 
 interface IProps {
@@ -16,6 +18,7 @@ interface IProps {
     hasErrors: boolean;
   };
   getTodos: () => void;
+  cancelGetTodos: () => void;
   addTodo: () => void;
 }
 
@@ -26,9 +29,13 @@ class Board extends Component<IProps, IState> {
     this.props.getTodos();
   }
 
+  componentWillUnmount() {
+    this.props.cancelGetTodos();
+  }
+
   render() {
-    if (this.props.todos.isFetching) return "LOADING...";
-    if (this.props.todos.hasErrors) return "SOMETHING WENT WRONG...";
+    if (this.props.todos.isFetching) return <Loading />;
+    if (this.props.todos.hasErrors) return <Error />;
 
     return (
       <div className="board">
@@ -59,6 +66,7 @@ const mapStateToProps = (state: IAppState) => ({
 
 const mapDispatchToProps = {
   getTodos,
+  cancelGetTodos,
   addTodo
 };
 
