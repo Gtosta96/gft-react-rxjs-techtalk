@@ -1,66 +1,76 @@
 import './Board.css';
 
 import React, { Component } from 'react';
-import * as ReactRedux from 'react-redux';
 
-import { IAppState } from '../../../redux/configureStore';
-import { ETodoStatus, ITodo } from '../../../redux/models/todo';
-import { addTodo, getTodos } from '../../../redux/reducers/todos';
+import { ETodoColors, ETodoStatus, ITodo } from '../../../models/todo';
 import Fab from '../../shared/Fab/Fab';
+import { changeTodoHelper, moveTodoHelper } from './helpers';
 import TodoList from './TodoList/TodoList';
+import mockTodos from './todos.json';
 
-interface IProps {
-  todos: {
-    todos: ITodo[];
-    isFetching: boolean;
-    hasErrors: boolean;
-  };
-  getTodos: () => void;
-  addTodo: () => void;
+interface IState {
+  todos: ITodo[];
 }
 
-interface IState {}
+class Board extends Component<any, IState> {
+  state = {
+    todos: mockTodos as any
+  };
 
-class Board extends Component<IProps, IState> {
-  componentDidMount() {
-    this.props.getTodos();
-  }
+  addTodo = () => {
+    const emptyTodo = {
+      id: Math.random().toString(),
+      title: "",
+      description: "",
+      color: ETodoColors.RED,
+      status: ETodoStatus.TODO
+    };
+
+    this.setState({
+      todos: [...this.state.todos, emptyTodo]
+    });
+  };
+
+  changeTodo = (todo: ITodo, modifiedTodo: Partial<ITodo>) => {
+    this.setState({
+      todos: changeTodoHelper(this.state.todos, todo, modifiedTodo)
+    });
+  };
+
+  moveTodo = (todo: ITodo, status: ETodoStatus) => {
+    this.setState({
+      todos: moveTodoHelper(this.state.todos, todo, status)
+    });
+  };
 
   render() {
-    if (this.props.todos.isFetching) return "LOADING...";
-    if (this.props.todos.hasErrors) return "SOMETHING WENT WRONG...";
-
     return (
       <div className="board">
         <TodoList
           title={ETodoStatus.TODO}
-          todos={this.props.todos.todos.filter(todo => todo.status === ETodoStatus.TODO)}
+          changeTodo={this.changeTodo}
+          moveTodo={this.moveTodo}
+          todos={this.state.todos.filter((todo: ITodo) => todo.status === ETodoStatus.TODO)}
         />
 
         <TodoList
           title={ETodoStatus.DOING}
-          todos={this.props.todos.todos.filter(todo => todo.status === ETodoStatus.DOING)}
+          changeTodo={this.changeTodo}
+          moveTodo={this.moveTodo}
+          todos={this.state.todos.filter((todo: ITodo) => todo.status === ETodoStatus.DOING)}
         />
 
         <TodoList
           title={ETodoStatus.DONE}
-          todos={this.props.todos.todos.filter(todo => todo.status === ETodoStatus.DONE)}
+          changeTodo={this.changeTodo}
+          moveTodo={this.moveTodo}
+          todos={this.state.todos.filter((todo: ITodo) => todo.status === ETodoStatus.DONE)}
         />
 
-        <Fab onClick={this.props.addTodo} />
+        <Fab onClick={this.addTodo} />
       </div>
     );
   }
 }
 
-const mapStateToProps = (state: IAppState) => ({
-  todos: state.todos // isFetching, hasErrors, todos
-});
-
-const mapDispatchToProps = {
-  getTodos,
-  addTodo
-};
-
-const connectToRedux = ReactRedux.connect(mapStateToProps, mapDispatchToProps);
-export default connectToRedux(Board);
+export default Board;

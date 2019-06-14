@@ -1,27 +1,30 @@
-{
-  "todos": [{
+[
+  {
     "id": 1,
     "title": "Tomar café",
     "description": "Tomar café da manhã pra ficar fortinho",
     "status": "TODO",
     "color": "Pink"
-  }, {
+  },
+  {
     "id": 2,
     "title": "Estudar para ser zica nos HTML & CSS",
     "description": "HTML é de boa mas e CSS... PQP!",
     "status": "DOING",
     "color": "Amber"
-  }, {
+  },
+  {
     "id": 3,
     "title": "Reunião Semanal de FE",
     "description": "Montar Conteúdo sobre FE para ajudar o Tosta",
     "status": "DOING",
     "color": "Brown"
-  }, {
+  },
+  {
     "id": 4,
     "title": "Comer coxinha escondido",
     "description": "Comer coxinha moscando na mesa dos amiguinho",
     "status": "DONE",
     "color": "Red"
-  }]
-}
+  }
+]
