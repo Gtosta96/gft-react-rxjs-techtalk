@@ -38,6 +38,7 @@ class Todo extends React.Component<IProps, IState> {
       ETodoColors.BROWN
     ]
   };
+
   render() {
     return (
       <div className={`card ${this.props.todo.color}`}>

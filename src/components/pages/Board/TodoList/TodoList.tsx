@@ -17,6 +17,7 @@ class TodoList extends Component<IProps> {
     return (
       <div className="todo-list">
         <h1 className="title">{this.props.title}</h1>
+
         {this.props.todos.map(todo => (
           <Todo
             key={todo.id}
