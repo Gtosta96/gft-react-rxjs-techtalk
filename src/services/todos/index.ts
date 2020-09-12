@@ -1,9 +1,9 @@
-import * as rxjs from 'rxjs';
-import * as rxjsOperators from 'rxjs/operators';
+import * as rxjs from "rxjs";
+import * as rxjsOperators from "rxjs/operators";
 
-import { ETodoColors, ETodoStatus, ITodo } from '../../models/todo';
-import apiService from '../api';
-import { changeTodoHelper, moveTodoHelper } from './helpers';
+import { ETodoColors, ETodoStatus, ITodo } from "../../models/todo";
+import apiService from "../api";
+import { changeTodoHelper, moveTodoHelper } from "./helpers";
 
 class TodosService {
   private todos$ = new rxjs.BehaviorSubject<ITodo[]>([]);
@@ -26,15 +26,15 @@ class TodosService {
     ETodoColors.AMBER,
     ETodoColors.ORANGE,
     ETodoColors.DEEPORANGE,
-    ETodoColors.BROWN
+    ETodoColors.BROWN,
   ];
 
   private loadTodos = (): void => {
     this.requestSubscription = apiService
-      .get("http://my-json-server.typicode.com/HerowayBrasil/04-react/todos")
+      .get("http://my-json-server.typicode.com/Gtosta96/gft-react-rxjs-techtalk/todos")
       .pipe(
-        rxjsOperators.map(xhr => xhr.response),
-        rxjsOperators.tap(todos => this.todos$.next(todos))
+        rxjsOperators.map((xhr) => xhr.response),
+        rxjsOperators.tap((todos) => this.todos$.next(todos))
       )
       .subscribe();
   };
@@ -57,7 +57,7 @@ class TodosService {
       title: "",
       description: "",
       color: ETodoColors.RED,
-      status: ETodoStatus.TODO
+      status: ETodoStatus.TODO,
     };
 
     this.todos$.next([...this.todos$.value, newTodo]);
