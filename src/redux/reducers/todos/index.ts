@@ -1,13 +1,21 @@
-import { Action } from 'redux';
-import * as reduxObservable from 'redux-observable';
-import * as rxjs from 'rxjs';
-import { ajax as rxjsAjax } from 'rxjs/ajax';
-import * as rxjsOperators from 'rxjs/operators';
+import { Action } from "redux";
+import * as reduxObservable from "redux-observable";
+import * as rxjs from "rxjs";
+import { ajax as rxjsAjax } from "rxjs/ajax";
+import * as rxjsOperators from "rxjs/operators";
 
-import { IAction } from '../../models/redux';
-import { ETodoColors, ETodoStatus, ITodo } from '../../models/todo';
-import { changeTodoHelper, moveTodoHelper } from './helpers';
-import { EActions, IAddTodo, ICancelGetTodo, IChangeTodo, IGetTodo, IMoveTodo, IState } from './types';
+import { IAction } from "../../models/redux";
+import { ETodoColors, ETodoStatus, ITodo } from "../../models/todo";
+import { changeTodoHelper, moveTodoHelper } from "./helpers";
+import {
+  EActions,
+  IAddTodo,
+  ICancelGetTodo,
+  IChangeTodo,
+  IGetTodo,
+  IMoveTodo,
+  IState,
+} from "./types";
 
 const INITIAL_STATE: IState = {
   isFetching: false,
@@ -29,8 +37,8 @@ const INITIAL_STATE: IState = {
     ETodoColors.AMBER,
     ETodoColors.ORANGE,
     ETodoColors.DEEPORANGE,
-    ETodoColors.BROWN
-  ]
+    ETodoColors.BROWN,
+  ],
 };
 export default function reducer(state = INITIAL_STATE, action: IAction<any>): IState {
   switch (action.type) {
@@ -39,7 +47,7 @@ export default function reducer(state = INITIAL_STATE, action: IAction<any>): IS
         isFetching: state.isFetching,
         hasErrors: state.hasErrors,
         todos: state.todos.concat(action.payload),
-        colors: state.colors
+        colors: state.colors,
       };
 
     case EActions.CHANGE_TODO:
@@ -50,7 +58,7 @@ export default function reducer(state = INITIAL_STATE, action: IAction<any>): IS
         isFetching: state.isFetching,
         hasErrors: state.hasErrors,
         todos: changeTodoHelper(state, action as IChangeTodo),
-        colors: state.colors
+        colors: state.colors,
       };
 
     case EActions.MOVE_TODO:
@@ -58,7 +66,7 @@ export default function reducer(state = INITIAL_STATE, action: IAction<any>): IS
         isFetching: state.isFetching,
         hasErrors: state.hasErrors,
         todos: moveTodoHelper(state, action as IMoveTodo),
-        colors: state.colors
+        colors: state.colors,
       };
 
     case EActions.HTTP_GET_TODOS:
@@ -66,7 +74,7 @@ export default function reducer(state = INITIAL_STATE, action: IAction<any>): IS
         isFetching: true,
         hasErrors: state.hasErrors,
         todos: state.todos,
-        colors: state.colors
+        colors: state.colors,
       };
 
     case EActions.HTTP_GET_TODOS_SUCCESS:
@@ -74,7 +82,7 @@ export default function reducer(state = INITIAL_STATE, action: IAction<any>): IS
         isFetching: false,
         hasErrors: false,
         todos: action.payload,
-        colors: state.colors
+        colors: state.colors,
       };
 
     case EActions.HTTP_GET_TODOS_FAIL:
@@ -82,7 +90,7 @@ export default function reducer(state = INITIAL_STATE, action: IAction<any>): IS
         isFetching: false,
         hasErrors: true,
         todos: INITIAL_STATE.todos,
-        colors: state.colors
+        colors: state.colors,
       };
 
     default:
@@ -97,41 +105,43 @@ export const addTodo = (): IAddTodo => ({
     title: "",
     description: "",
     color: ETodoColors.RED,
-    status: ETodoStatus.TODO
-  }
+    status: ETodoStatus.TODO,
+  },
 });
 
 export const changeTodo = (todo: ITodo, changes: Partial<ITodo>): IChangeTodo => ({
   type: EActions.CHANGE_TODO,
-  payload: { todo, changes }
+  payload: { todo, changes },
 });
 
 export const moveTodo = (todo: ITodo, status: ETodoStatus): IMoveTodo => ({
   type: EActions.MOVE_TODO,
-  payload: { todo, status }
+  payload: { todo, status },
 });
 
 export const getTodos = (): IGetTodo => ({
-  type: EActions.HTTP_GET_TODOS
+  type: EActions.HTTP_GET_TODOS,
 });
 
 export const cancelGetTodos = (): ICancelGetTodo => ({
-  type: EActions.CANCEL_GET_TODOS
+  type: EActions.CANCEL_GET_TODOS,
 });
 
 export const getTodosEpic = (action$: rxjs.Observable<Action>): rxjs.Observable<Action> =>
   action$.pipe(
     reduxObservable.ofType(EActions.HTTP_GET_TODOS),
     rxjsOperators.switchMap(() =>
-      rxjsAjax.get(`http://my-json-server.typicode.com/HerowayBrasil/04-react/todos`).pipe(
-        rxjsOperators.takeUntil(action$.pipe(reduxObservable.ofType(EActions.CANCEL_GET_TODOS))),
-        rxjsOperators.map(hxr => ({
-          type: EActions.HTTP_GET_TODOS_SUCCESS,
-          payload: hxr.response
-        })),
-        rxjsOperators.catchError(error =>
-          rxjs.of({ type: EActions.HTTP_GET_TODOS_FAIL, payload: error })
+      rxjsAjax
+        .get(`http://my-json-server.typicode.com/Gtosta96/gft-react-rxjs-techtalk/todos`)
+        .pipe(
+          rxjsOperators.takeUntil(action$.pipe(reduxObservable.ofType(EActions.CANCEL_GET_TODOS))),
+          rxjsOperators.map((hxr) => ({
+            type: EActions.HTTP_GET_TODOS_SUCCESS,
+            payload: hxr.response,
+          })),
+          rxjsOperators.catchError((error) =>
+            rxjs.of({ type: EActions.HTTP_GET_TODOS_FAIL, payload: error })
+          )
         )
-      )
     )
   );
